@@ -61,3 +61,8 @@
 - Heap
 - Set
 - Map
+
+## Chapter 10
+
+- panic
+- error
