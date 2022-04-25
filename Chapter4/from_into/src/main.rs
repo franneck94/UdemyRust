@@ -15,7 +15,7 @@ fn main() {
     let num = Number::from(30);
     println!("My number is {:?}", num);
 
-    let int = 30s;
+    let int = 30;
     let num: Number = int.into();
     println!("My number is {:?}", num);
 }

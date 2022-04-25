@@ -1,3 +1,6 @@
+// Only one owner at a time
+// If the owner goes out if scope, the value will be dropped
+
 fn eat_box_i32(boxed_i32: Box<i32>) {
     println!("Destroying box that contains {}", boxed_i32);
 }
