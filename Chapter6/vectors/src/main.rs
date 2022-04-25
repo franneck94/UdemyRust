@@ -28,4 +28,9 @@ fn main() {
     println!("{:?}", nums);
     nums.shuffle(&mut thread_rng());
     println!("{:?}", nums);
+
+    match nums.get(5) {
+        Some(val) => println!("Value: {}", val),
+        _ => println!("Empty"),
+    };
 }
