@@ -8,6 +8,11 @@
 
 ## Tools
 
+- Build System
+- Package Manager
+- Compiler
+- Unit Testing
+
 - cargo
   - cargo new NAME
   - cargo build

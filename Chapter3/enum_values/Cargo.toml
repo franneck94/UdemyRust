@@ -1,5 +1,5 @@
 [package]
-name = "if_lets"
+name = "enum_values"
 version = "0.1.0"
 edition = "2021"
 

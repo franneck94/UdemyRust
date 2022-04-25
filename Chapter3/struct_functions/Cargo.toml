@@ -1,5 +1,5 @@
 [package]
-name = "if_else"
+name = "struct_functions"
 version = "0.1.0"
 edition = "2021"
 

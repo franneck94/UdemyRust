@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "if_lets"
+name = "string_slices"
 version = "0.1.0"
