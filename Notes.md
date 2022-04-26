@@ -8,17 +8,21 @@
 
 ## Tools
 
+Implemented features:
+
 - Build System
 - Package Manager
 - Compiler
 - Unit Testing
+- Documentation Generator
 
-- cargo
-  - cargo new NAME
-  - cargo build
-  - cargo run
-    - Would also run *cargo build* if binary is not up-to-date
-  - cargo install XYZ
+Cargo:
+
+- cargo new NAME
+- cargo build
+- cargo run
+  - Would also run *cargo build* if binary is not up-to-date
+- cargo install XYZ
 
 ## Memory
 
