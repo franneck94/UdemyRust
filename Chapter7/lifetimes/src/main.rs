@@ -4,24 +4,26 @@
 // each parameter can have its own ticked lifetime
 
 fn main() {
-    // let r;
-
+    // let r: &str;
     // {
-    //     let x = 5;
-    //     r = &x;
+    //     let string1 = String::from("test");
+    //     r = &string1;
     // }
-
     // println!("{}", r);
 
-    // &i32
-    // &'a i32
-    // &*a mut i32
+    let string1 = String::from("test");
+    let string2 = String::from("testtt");
 
-    let _s = example("hi");
+    let longest_string = longest(&string1, &string2);
+    println!("{}", longest_string);
 }
 
 // return value lifetime must math the input parameter lifetime
 // Reason: only can return reference if its still valid after function ends
-fn example<'a>(x: &'a str) -> &'a str {
-    x
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }

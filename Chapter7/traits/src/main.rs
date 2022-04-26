@@ -1,29 +1,51 @@
-struct Empty;
-struct Null;
-
-// A trait generic over `T`.
-trait DoubleDrop<T> {
-    // Define a method on the caller type which takes an
-    // additional single parameter `T` and does nothing with it.
-    fn double_drop(self, _: T);
+trait Summary {
+    fn summarize(&self) -> String;
 }
 
-// Implement `DoubleDrop<T>` for any generic parameter `T` and
-// caller `U`.
-impl<T, U> DoubleDrop<T> for U {
-    // This method takes ownership of both passed arguments,
-    // deallocating both.
-    fn double_drop(self, _: T) {}
+struct TwitterTweet {
+    author: String,
+    text: String,
+}
+
+struct YoutubeVideo {
+    author: String,
+    name: String,
+    descr: String,
+}
+
+impl Summary for TwitterTweet {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.author, self.text)
+    }
+}
+
+impl Summary for YoutubeVideo {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.author, self.descr)
+    }
+}
+
+fn notify(item: &impl Summary) {
+    println!("{}", item.summarize());
+}
+
+fn notify2<T: Summary>(item: &T) {
+    println!("{}", item.summarize());
 }
 
 fn main() {
-    let empty = Empty;
-    let null = Null;
+    let tweet = TwitterTweet {
+        author: String::from("Jan"),
+        text: String::from("blabla;"),
+    };
+    println!("{}", tweet.summarize());
+    notify(&tweet);
 
-    // Deallocate `empty` and `null`.
-    empty.double_drop(null);
-
-    //empty;
-    //null;
-    // ^ TODO: Try uncommenting these lines.
+    let video = YoutubeVideo {
+        author: String::from("Jan"),
+        name: String::from("blub;"),
+        descr: String::from("blabla;"),
+    };
+    println!("{}", video.summarize());
+    notify(&video);
 }
