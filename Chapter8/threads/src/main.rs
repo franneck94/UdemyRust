@@ -14,4 +14,10 @@ fn main() {
         println!("{}", i);
         thread::sleep(Duration::from_millis(100));
     }
+
+    let vec = vec![1, 2, 3];
+
+    thread::spawn(move || {
+        println!("{:#?}", vec);
+    });
 }

@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "from_into"
+name = "channels"
 version = "0.1.0"
