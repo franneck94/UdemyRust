@@ -1,13 +1,13 @@
 #[derive(Debug)]
-enum IpAddressKind {
-    V4(String),
-    V6(String),
+enum LoginData {
+    None,
+    Username(String),
 }
 
 fn main() {
-    let localhost = IpAddressKind::V4(String::from("192.168.0.1"));
-    println!("{:#?}", localhost);
+    let none_user = LoginData::None;
+    println!("{:#?}", none_user);
 
-    let localhost2 = IpAddressKind::V6(String::from("FFAA.ABCC.0000.0001"));
-    println!("{:#?}", localhost2);
+    let admin = LoginData::Username(String::from("franneck94"));
+    println!("{:#?}", admin);
 }

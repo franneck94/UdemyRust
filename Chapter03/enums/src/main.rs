@@ -21,11 +21,8 @@ fn main() {
 
     println!("{}", _a.what_am_i());
 
-    // use crate::PermissionLevel::*;
-    use crate::PermissionLevel::{Admin, Instructor};
-
-    let _d = Admin;
+    let _d = PermissionLevel::Admin;
     println!("{}", _d.what_am_i());
-    let _e = Instructor;
+    let _e = PermissionLevel::Instructor;
     println!("{}", _e.what_am_i());
 }

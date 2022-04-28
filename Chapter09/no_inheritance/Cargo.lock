@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "printing"
+name = "no_inheritance"
 version = "0.1.0"
