@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "iterators"
+name = "iterator_functions"
 version = "0.1.0"
