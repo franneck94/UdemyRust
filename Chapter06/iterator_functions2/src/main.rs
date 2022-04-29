@@ -27,8 +27,18 @@ fn for_eacher() {
         .for_each(|(idx, val)| println!("{}, {}", idx, val));
 }
 
+fn flattener() {
+    let a = [['a', 'b', 'c'], ['d', 'e', 'f']];
+
+    a.iter()
+        .flatten()
+        .enumerate()
+        .for_each(|(idx, val)| println!("{}, {}", idx, val));
+}
+
 fn main() {
     // zipper();
     // enumerator();
-    for_eacher();
+    // for_eacher();
+    flattener();
 }

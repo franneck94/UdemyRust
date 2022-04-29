@@ -27,29 +27,26 @@ Cargo:
 ## Memory
 
 - Per default every variable is immutable
-
 - Each value in rust is owned by one variable
 - Whenever the owener goes out of scrope, the value will be deallocated
 - There can only be ONE owner at a time
-
 - There are only two options for passing variables of non-trivial types to functions
   - Move (standard case)
   - Reference (&dtype)
 - There is no copy by value for non-trivial types!
-
 - Borrowing in a scope
   - As many immutable references as we want, but then no mutable reference
   - Only one mutable reference, but then no immutable references
 
 ### Constants
 
-Constants live for the entire lifetime of a program.  
-Constants in Rust have no fixed address in memory, they’re effectively inlined to each place that they’re used.  
+- Constants live for the entire lifetime of a program.  
+- Constants in Rust have no fixed address in memory, they’re effectively inlined to each place that they’re used.  
 
 ### Statics
 
-Rust provides a ‘global variable’ sort of facility in static items.  
-There is only one instance for each value, and it’s at a fixed location in memory.
+- Rust provides a ‘global variable’ sort of facility in static items.  
+- There is only one instance for each value, and it’s at a fixed location in memory.
 
 ## String
 
@@ -80,6 +77,12 @@ There is only one instance for each value, and it’s at a fixed location in mem
 ## Loops
 
 - nested *loop* loops could have labels
+
+## Iterators
+
+- into_iter may yield any of T, &T or &mut T, depending on the context
+- iter will yield &T, by convention
+- iter_mut will yield &mut T, by convention
 
 ## Array
 
