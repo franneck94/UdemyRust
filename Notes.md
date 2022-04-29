@@ -44,15 +44,12 @@ Cargo:
 ### Constants
 
 Constants live for the entire lifetime of a program.  
-More specifically, constants in Rust have no fixed address in memory.  
-This is because they’re effectively inlined to each place that they’re used.  
-References to the same constant are not necessarily guaranteed to refer to the same memory address for this reason.
+Constants in Rust have no fixed address in memory, they’re effectively inlined to each place that they’re used.  
 
 ### Statics
 
 Rust provides a ‘global variable’ sort of facility in static items.  
-They’re similar to constants, but static items aren’t inlined upon use.  
-This means that there is only one instance for each value, and it’s at a fixed location in memory.
+There is only one instance for each value, and it’s at a fixed location in memory.
 
 ## String
 

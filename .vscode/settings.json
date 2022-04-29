@@ -1,0 +1,65 @@
+{
+    // Editor settings
+    "editor.tabSize": 4,
+    "editor.rulers": [80, 120],
+    "editor.renderWhitespace": "trailing",
+    "editor.suggestSelection": "first",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "explorer.compactFolders": false,
+    // Explorer settings
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "explorer.copyRelativePathSeparator": "/",
+    // Files settings
+    "files.autoSave": "onFocusChange",
+    "files.associations": {
+        "*.pyd": "Cython",
+        "*.pyx": "Cython",
+        ".clang*": "yaml"
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    // Workbench settings
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook",
+        "*.md": "vscode.markdown.preview.editor",
+        "*.svg": "svgPreviewer.customEditor"
+    },
+    "workbench.editor.untitled.hint": "hidden",
+    // Git settings
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    // IntelliSense AI Extension
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    // Text
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false,
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 120
+    },
+    "[plaintext]": {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 120
+    },
+    // Other extensions
+    "codesnap.showWindowControls": false,
+    "codesnap.shutterAction": "copy",
+    "editor.cursorSmoothCaretAnimation": true,
+    "Workspace_Formatter.includePattern": ["*.rs"],
+    "Workspace_Formatter.excludePattern": ["**/build", "**/.*", "**/.vscode"],
+    "svg.preview.autoOpen": true,
+    "errorLens.delay": 1000,
+    "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+    "errorLens.enabled": false,
+    "[rust]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "matklad.rust-analyzer"
+    }
+}

@@ -2,5 +2,3 @@ target/
 debug/
 release/
 rls/
-*.o
-.vscode/
