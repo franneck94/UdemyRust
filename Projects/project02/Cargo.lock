@@ -23,14 +23,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cli"
-version = "0.1.0"
-dependencies = [
- "regex",
- "text-colorizer",
-]
-
-[[package]]
 name = "colored"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -58,15 +50,23 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
-version = "0.2.124"
+version = "0.2.125"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "21a41fed9d98f27ab1c6d161da622a4fa35e8a54a8adc24bbf3ddd0ef70b0e50"
+checksum = "5916d2ae698f6de9bfb891ad7a8d65c09d232dc58cc4ac433c7da3b2fd84bc2b"
 
 [[package]]
 name = "memchr"
 version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "308cc39be01b73d0d18f82a0e7b2a3df85245f84af96fdddc5d202d27e47b86a"
+
+[[package]]
+name = "project02"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "regex",
+]
 
 [[package]]
 name = "regex"
@@ -84,15 +84,6 @@ name = "regex-syntax"
 version = "0.6.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
-
-[[package]]
-name = "text-colorizer"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b30f9b94bd367aacc3f62cd28668b10c7ae1784c7d27e223a1c21646221a9166"
-dependencies = [
- "colored",
-]
 
 [[package]]
 name = "winapi"

@@ -1,21 +1,28 @@
-fn destroy_box(c: &Box<i32>) {
-    println!("Destroying a box that contains {}", c);
+fn main() {
+    let s = "Jan Schaffranek".to_owned();
+
+    // take_ownership1(&s); // immutable move
+    // take_ownership2(&s); // immutable move
+
+    take_reference1(&s); // immutable ref
+    take_reference2(&s); // immutable ref
+
+    take_reference1("Jan"); // immutable ref
+    take_reference2("Jan"); // immutable ref
 }
 
-fn main() {
-    let x = 5u32;
-    let y = x;
+fn take_ownership1(p: String) {
+    println!("{}", p);
+}
 
-    println!("x is {}, and y is {}", x, y);
+fn take_ownership2(p: String) {
+    println!("{}", p);
+}
 
-    let a = Box::new(5i32);
-    println!("a contains: {}", a);
+fn take_reference1(p: &str) {
+    println!("{}", p);
+}
 
-    let b = a;
-
-    // println!("a contains: {}", a);
-
-    destroy_box(&b);
-
-    println!("b contains: {}", b);
+fn take_reference2(p: &str) {
+    println!("{}", p);
 }

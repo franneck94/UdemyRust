@@ -1,27 +1,15 @@
-// RAII (Resource Acquisition Is Initialization)
+// RAII (Ressource Acquisition Is Initialization)
 
-struct ToDrop;
+struct Data;
 
-impl Drop for ToDrop {
+impl Drop for Data {
     fn drop(&mut self) {
-        println!("ToDrop is being dropped");
+        println!("Drop is being called...");
     }
-}
-
-fn create_box() {
-    let _box1 = Box::new(3i32);
 }
 
 fn main() {
-    let _box2 = Box::new(5i32);
+    let mut box1 = Box::new(5);
 
-    {
-        let _box3 = Box::new(4i32);
-    }
-
-    for _ in 0u32..1_000 {
-        create_box();
-    }
-
-    let _x = ToDrop;
+    let d = Box::new(Data {});
 }

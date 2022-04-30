@@ -5,28 +5,31 @@ use std::io;
 
 fn main() {
     println!("Welcome to the Guessing Game!\n");
-    let secret_number = rand::thread_rng().gen_range(1..101);
 
-    loop {
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    'game_loop: loop {
         println!("Please enter your number: ");
+
         let mut guess = String::new();
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read number!");
 
-        let guessed_num: u32 = match guess.trim().parse() {
+        let guessed_num: u32 = match guess.trim().parse::<u32>() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
-        println!("You guesses {}", guessed_num);
+        println!("You guessed: {}", guessed_num);
+
         match guessed_num.cmp(&secret_number) {
-            Ordering::Less => println!("{}", "To small!".red()),
+            Ordering::Less => println!("{}", "Too small!".red()),
             Ordering::Equal => {
                 println!("{}", "You win!".green());
-                break;
+                break 'game_loop;
             }
-            Ordering::Greater => println!("{}", "To bug!".red()),
+            Ordering::Greater => println!("{}", "Too big!".red()),
         }
     }
 }

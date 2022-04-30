@@ -1,23 +1,17 @@
-#![allow(overflowing_literals)]
-
 fn main() {
-    let decimal = 65.4321_f32;
+    let decimal_flt = 265.4321_f32;
 
-    // let integer: u8 = decimal;
-    // Explicit conversion
-    let integer = decimal as u8;
-    let character = integer as char;
+    // let decimal_int: u8 = decimal_flt;
+    let decimal_int1 = decimal_flt as u8;
+    println!("Casting: {} -> {}", decimal_flt, decimal_int1);
 
-    println!("Casting: {} -> {} -> {}", decimal, integer, character);
+    let decimal_int1 = decimal_flt as u16;
+    println!("Casting: {} -> {}", decimal_flt, decimal_int1);
 
-    // 1000 already fits in a u16
-    println!("1000 as a u16 is: {}", 1000 as u16);
-    println!("1000 as a u8 is : {}", 1000 as u8);
+    let value = 1337;
+    let decimal_int1 = value as i8;
+    println!("Casting: {} -> {}", value, decimal_int1);
 
-    // 300.0 is 255
-    println!("300.0 is {}", 300.0_f32 as u8);
-    // -100.0 as u8 is 0
-    println!("-100.0 as u8 is {}", -100.0_f32 as u8);
-    // nan as u8 is 0
-    println!("nan as u8 is {}", f32::NAN as u8);
+    let decimal_int1 = value as i16;
+    println!("Casting: {} -> {}", value, decimal_int1);
 }
