@@ -1,11 +1,17 @@
+use std::fmt::Debug;
+use std::fmt::Display;
+
 #[derive(Debug)]
 struct Data<T> {
     value: T,
 }
 
-impl<T> Data<T> {
+impl<T> Data<T>
+where
+    T: Debug + Display,
+{
     fn print_me(&self) {
-        println!("Hello its me!");
+        println!("My value: {}", self.value);
     }
 }
 

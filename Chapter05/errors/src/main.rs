@@ -7,25 +7,14 @@ use std::fs::File;
 use std::io::{Error, ErrorKind};
 
 fn main() {
-    let f = File::open("file.txt");
+    let f1 = File::open("file.txt");
+    let f2 = File::open("Cargo.toml");
 
-    let _f = match f {
+    let f = match f2 {
         Ok(file) => file,
         Err(error) => match error.kind() {
-            ErrorKind::NotFound => panic!("Not found"),
-            _ => panic!("Unknown error"),
+            ErrorKind::NotFound => panic!("File not found!"),
+            _ => panic!("Unknown error!"),
         },
     };
-
-    let _f2 = File::open("file.txt").unwrap();
-
-    let _f3 = File::open("file.txt").expect("Failed to open file");
-
-    let _f4 = open_file("file.txt");
-}
-
-fn open_file(filename: &str) -> Result<File, Error> {
-    let f = File::open(filename)?;
-
-    Ok(f)
 }

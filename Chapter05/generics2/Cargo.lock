@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "panic"
+name = "generics2"
 version = "0.1.0"

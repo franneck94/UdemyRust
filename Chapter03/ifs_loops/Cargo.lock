@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "bounds"
+name = "ifs_loops"
 version = "0.1.0"

@@ -1,5 +1,5 @@
 [package]
-name = "panic"
+name = "while_lets"
 version = "0.1.0"
 edition = "2021"
 

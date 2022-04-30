@@ -1,51 +1,46 @@
 trait Summary {
-    fn summarize(&self) -> String;
-}
-
-struct TwitterTweet {
-    author: String,
-    text: String,
-}
-
-struct YoutubeVideo {
-    author: String,
-    name: String,
-    descr: String,
-}
-
-impl Summary for TwitterTweet {
     fn summarize(&self) -> String {
-        format!("{}: {}", self.author, self.text)
+        format!("Empty...")
     }
 }
 
-impl Summary for YoutubeVideo {
+struct FacebookPost {
+    author: String,
+    content: String,
+}
+
+struct InstagramPost {
+    author: String,
+    description: String,
+}
+
+impl Summary for FacebookPost {
     fn summarize(&self) -> String {
-        format!("{}: {}", self.author, self.descr)
+        format!("{}: {}", self.author, self.content)
     }
 }
 
-fn notify(item: &impl Summary) {
-    println!("{}", item.summarize());
+impl Summary for InstagramPost {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.author, self.description)
+    }
 }
 
-fn notify2<T: Summary>(item: &T) {
-    println!("{}", item.summarize());
+fn notify(element: &impl Summary) {
+    println!("{}", element.summarize());
 }
 
 fn main() {
-    let tweet = TwitterTweet {
+    let fb_post = FacebookPost {
         author: String::from("Jan"),
-        text: String::from("blabla;"),
+        content: String::from("blabla"),
     };
-    println!("{}", tweet.summarize());
-    notify(&tweet);
 
-    let video = YoutubeVideo {
+    let ig_post = InstagramPost {
         author: String::from("Jan"),
-        name: String::from("blub;"),
-        descr: String::from("blabla;"),
+        description: String::from("also blabla"),
     };
-    println!("{}", video.summarize());
-    notify(&video);
+
+    notify(&fb_post);
+    notify(&ig_post);
 }
