@@ -13,18 +13,28 @@ impl PermissionLevel {
             PermissionLevel::Admin => String::from("I am an Admin"),
         }
     }
+
+    fn is_admin(&self) -> bool {
+        let ret = if let PermissionLevel::Admin = self {
+            true
+        } else {
+            false
+        }
+
+        ret
+    }
 }
 
 fn main() {
     let user1 = PermissionLevel::Admin;
     println!("{:?}", user1);
-    println!("{}", user1.description());
+    println!("{}", user1.is_admin());
 
     let user2 = PermissionLevel::Instructor;
     println!("{:?}", user2);
-    println!("{}", user2.description());
+    println!("{}", user2.is_admin());
 
     let user3 = PermissionLevel::User;
     println!("{:?}", user3);
-    println!("{}", user3.description());
+    println!("{}", user3.is_admin());
 }

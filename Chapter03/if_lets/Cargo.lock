@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "loops"
+name = "if_lets"
 version = "0.1.0"

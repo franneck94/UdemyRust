@@ -1,16 +1,23 @@
+fn my_function(inp: i32) -> i32 {
+    inp * 2
+}
+
+fn my_function2() {
+    let num = 2;
+
+    let closure = |inp: i32| -> i32 { inp * 2 };
+    let ret2 = closure(num);
+    println!("{}", ret2);
+
+    let ret3 = closure(num);
+    println!("{}", ret3);
+}
+
 fn main() {
-    fn function(i: i32) -> i32 {
-        i + 1
-    }
+    let num = 2;
 
-    let closure_annotated = |i: i32| -> i32 { i + 1 };
-    let closure_inferred = |i| i + 1;
+    let ret = my_function(num);
+    println!("{}", ret);
 
-    let i = 1;
-    println!("function: {}", function(i));
-    println!("closure_annotated: {}", closure_annotated(i));
-    println!("closure_inferred: {}", closure_inferred(i));
-
-    let one = || 1;
-    println!("closure returning one: {}", one());
+    my_function2();
 }

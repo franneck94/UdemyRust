@@ -1,19 +1,26 @@
-// Tuples: Fixed length, different dtyps possible
+// Tuples: Fixed length, different dtypes possible
 
 fn main() {
-    let mut _tpl = (500, "hi", true);
+    let mut tpl = (500, "hi", true);
 
-    println!("{}", _tpl.0);
-    println!("{}", _tpl.1);
-    println!("{}", _tpl.2);
+    println!("{:?}", tpl);
 
-    let (x, y, z) = _tpl;
+    println!("First: ");
+    println!("{:?}", tpl.0);
+    println!("{:?}", tpl.1);
+    println!("{:?}\n", tpl.2);
 
-    println!("{}", x);
-    println!("{}", y);
-    println!("{}", z);
+    let (x, y, z) = tpl;
 
-    _tpl.0 = 400;
+    println!("Second: ");
+    println!("{:?}", x);
+    println!("{:?}", y);
+    println!("{:?}\n", z);
 
-    println!("{:?}", _tpl);
+    tpl.0 = 400;
+
+    println!("Third: ");
+    println!("{:?}", x);
+    println!("{:?}", y);
+    println!("{:?}\n", z);
 }
