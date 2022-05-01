@@ -1,16 +1,23 @@
 #[derive(Debug)]
-struct Rectangle {
-    width: f32,
-    height: f32,
+struct Circle {
+    radius: f32,
 }
 
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        if other.width < 0.0 || other.height < 0.0 {
+impl Circle {
+    fn compute_area(&self) -> f32 {
+        self.radius * self.radius * 3.14159265359
+    }
+
+    fn compute_circumference(&self) -> f32 {
+        2.0 * self.radius * 3.14159265359
+    }
+
+    fn smaller(&self, other: &Self) -> bool {
+        if self.radius < 0.0 || other.radius < 0.0 {
             panic!("invalid data");
         }
 
-        self.width >= other.width && self.height >= other.height
+        self.radius < other.radius
     }
 }
 
@@ -19,34 +26,23 @@ mod tests {
     use super::*;
 
     #[test]
-    fn rectangle_can_hold() {
-        let r1 = Rectangle {
-            width: 5.0,
-            height: 4.0,
-        };
-        let r2 = Rectangle {
-            width: 4.5,
-            height: 4.0,
-        };
+    fn test_circle() {
+        let c1 = Circle { radius: 1.0 };
+        let c2 = Circle { radius: 2.0 };
 
-        assert_eq!(r1.can_hold(&r2), true);
-        assert_ne!(r1.can_hold(&r2), false);
+        assert_eq!(c1.smaller(&c2), true);
+        assert_eq!(c2.smaller(&c1), false);
 
-        assert!(r2.can_hold(&r2), "Failed massge {:?}", r2);
+        assert_ne!(c1.smaller(&c2), false);
+        assert_ne!(c2.smaller(&c1), true);
     }
 
     #[test]
     #[should_panic]
-    fn rectangle_will_panic() {
-        let r1 = Rectangle {
-            width: 5.0,
-            height: 4.0,
-        };
-        let r2 = Rectangle {
-            width: -4.5,
-            height: -4.0,
-        };
+    fn test_panic() {
+        let c1 = Circle { radius: -1.0 };
+        let c2 = Circle { radius: 2.0 };
 
-        r1.can_hold(&r2);
+        c1.smaller(&c2);
     }
 }

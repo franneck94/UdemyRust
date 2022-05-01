@@ -69,6 +69,11 @@ Cargo:
   - Ok()
   - Err()
 
+### Expect vs Unwrap
+
+- expect == unwrap with a message
+- expect_err == unwrap_err with a message
+
 ## Match
 
 - *_* - like default case

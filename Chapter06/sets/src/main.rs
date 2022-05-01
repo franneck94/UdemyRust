@@ -1,30 +1,29 @@
 use std::collections::HashSet;
 
+#[derive(Hash, Eq, PartialEq, Debug)]
+struct Data {
+    value: i32,
+}
+
 fn main() {
-    let mut set = HashSet::new();
+    let mut set = HashSet::from([(Data { value: 2 }), (Data { value: 3 })]);
 
-    set.insert(1);
-    set.insert(2);
-    let inserted = set.insert(2);
+    println!("Contains 3?: {}", set.contains(&Data { value: 3 }));
+    println!("Contains 4?: {}", set.contains(&Data { value: 4 }));
 
-    println!("set {:?}", set);
-    println!("inserted {:?}", inserted);
+    set.insert(Data { value: 4 });
+    println!("Contains 4?: {}", set.contains(&Data { value: 4 }));
 
-    for x in set.iter() {
-        println!("Iter: {}", x);
-    }
+    let removed = set.remove(&Data { value: 4 });
 
-    let mut set2 = HashSet::new();
-    set2.insert(1);
-    set2.insert(3);
-    println!("set2 {:?}", set2);
+    let set1 = HashSet::from([1, 2]);
+    let set2 = HashSet::from([2, 3]);
 
-    let intersection = &set & &set2;
-    println!("intersection {:?}", intersection);
+    let intersection = (&set1) & (&set2);
+    let union = (&set1) | (&set2);
+    let diff = (&set1) - (&set2);
 
-    let union = &set | &set2;
-    println!("union {:?}", union);
-
-    let diff = &set - &set2;
-    println!("diff {:?}", diff);
+    println!("intersection: {:?}", intersection);
+    println!("union: {:?}", union);
+    println!("diff: {:?}", diff);
 }

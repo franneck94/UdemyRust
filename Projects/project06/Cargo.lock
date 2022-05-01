@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "vectors"
+name = "project04"
 version = "0.1.0"

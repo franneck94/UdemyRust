@@ -1,5 +1,5 @@
 [package]
-name = "vectors"
+name = "libs"
 version = "0.1.0"
 edition = "2021"
 
