@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "no_inheritance"
+name = "oop"
 version = "0.1.0"

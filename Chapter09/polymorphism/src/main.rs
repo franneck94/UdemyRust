@@ -1,58 +1,48 @@
-pub trait Draw {
-    fn draw(&self);
+pub trait Area {
+    fn area(&self) -> f32;
 }
 
-pub struct Screen {
-    components: Vec<Box<dyn Draw>>,
+#[derive(Debug)]
+pub struct Circle {
+    radius: f32,
 }
 
-impl Screen {
+impl Area for Circle {
+    fn area(&self) -> f32 {
+        return self.radius * self.radius * 3.14159;
+    }
+}
+
+#[derive(Debug)]
+pub struct Square {
+    length: f32,
+}
+
+impl Area for Square {
+    fn area(&self) -> f32 {
+        return self.length * self.length;
+    }
+}
+
+pub struct GeometricFormsList {
+    forms: Vec<Box<dyn Area>>,
+}
+
+impl GeometricFormsList {
     fn run(&self) {
-        for comp in self.components.iter() {
-            comp.draw();
+        for form in self.forms.iter() {
+            println!("Area: {}", form.area());
         }
     }
 }
 
-pub struct Button {
-    pub width: u32,
-    pub height: u32,
-    pub label: String,
-}
-
-impl Draw for Button {
-    fn draw(&self) {
-        println!("Drwaing button...");
-    }
-}
-
-pub struct SelectBox {
-    pub width: u32,
-    pub height: u32,
-    pub options: Vec<String>,
-}
-
-impl Draw for SelectBox {
-    fn draw(&self) {
-        println!("Drwaing button...");
-    }
-}
-
 fn main() {
-    let screen = Screen {
-        components: vec![
-            Box::new(Button {
-                width: 100,
-                height: 100,
-                label: String::from("Button"),
-            }),
-            Box::new(SelectBox {
-                width: 100,
-                height: 100,
-                options: vec![String::from("Option1"), String::from("Option2")],
-            }),
-        ],
+    let circle = Box::new(Circle { radius: 1.0 });
+    let square = Box::new(Square { length: 2.0 });
+
+    let forms = GeometricFormsList {
+        forms: vec![circle, square],
     };
 
-    screen.run();
+    forms.run();
 }

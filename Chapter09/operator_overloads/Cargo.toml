@@ -1,5 +1,5 @@
 [package]
-name = "no_inheritance"
+name = "operator_overloads"
 version = "0.1.0"
 edition = "2021"
 

@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "oop_example"
+name = "operator_overloads"
 version = "0.1.0"
