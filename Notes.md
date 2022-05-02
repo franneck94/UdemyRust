@@ -38,6 +38,12 @@ Cargo:
   - As many immutable references as we want, but then no mutable reference
   - Only one mutable reference, but then no immutable references
 
+### Pointer
+
+Rc<T>, the Reference Counted Smart Pointer  
+When a single value might have multiple owners.  
+For example, in graph data structures, multiple edges might point to the same node, and that node is conceptually owned by all of the edges that point to it.
+
 ### Constants
 
 - Constants live for the entire lifetime of a program.  
