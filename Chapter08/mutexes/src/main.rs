@@ -2,15 +2,15 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 fn main() {
-    // let m = Mutex::new(5);
+    let m = Mutex::new(5);
 
-    // {
-    //     let mut num = m.lock().unwrap();
-    //     println!("m = {:?}", m);
-    //     *num = 6;
-    // }
+    {
+        let mut num = m.lock().unwrap();
+        println!("m = {:?}", m);
+        *num = 6;
+    }
 
-    // println!("m = {:?}", m);
+    println!("m = {:?}", m);
 
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];

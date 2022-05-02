@@ -4,15 +4,6 @@ pub struct SplittedStr<'a> {
     delimiter: &'a str,
 }
 
-impl<'a> SplittedStr<'a> {
-    pub fn new(haystack: &'a str, delimiter: &'a str) -> Self {
-        Self {
-            remainder: haystack,
-            delimiter,
-        }
-    }
-}
-
 impl<'a> Iterator for SplittedStr<'a> {
     type Item = &'a str;
 
@@ -33,11 +24,19 @@ impl<'a> Iterator for SplittedStr<'a> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
         let haystack = "a b c d e";
-        let letters: Vec<_> = super::SplittedStr::new(haystack, " ").collect();
+        let letters = SplittedStr {
+            remainder: haystack,
+            delimiter: " ",
+        };
 
-        assert_eq!(letters, vec!["a", "b", "c", "d", "e"]);
+        assert_eq!(
+            letters.collect::<Vec<&str>>(),
+            vec!["a", "b", "c", "d", "e"]
+        );
     }
 }

@@ -93,3 +93,10 @@ Cargo:
 
 - Fixed size known at compile time
 - Size must not be fixed, when passing array as reference to a function
+
+## Threads & Async
+
+### Arc
+
+The type Arc<T> provides shared ownership of a value of type T, allocated in the heap.  
+Invoking clone on Arc produces a new Arc instance, which points to the same allocation on the heap as the source Arc, while increasing a reference count.
