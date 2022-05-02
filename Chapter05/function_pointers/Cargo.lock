@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "function_pointer"
+name = "function_pointers"
 version = "0.1.0"

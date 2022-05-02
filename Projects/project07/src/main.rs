@@ -1,11 +1,13 @@
 use std::cmp::Eq;
 use std::cmp::PartialEq;
 use std::ops::Add;
+use std::ops::Sub;
 
 #[derive(Debug, Eq, PartialEq)]
-pub struct Tensor1D<T>
+struct Tensor1D<T>
 where
-    T: Add<T, Output = T>,
+    T: Add<Output = T>,
+    T: Sub<Output = T>,
     T: Clone,
     T: Default,
 {
@@ -14,7 +16,8 @@ where
 
 impl<T> Tensor1D<T>
 where
-    T: Add<T, Output = T>,
+    T: Add<Output = T>,
+    T: Sub<Output = T>,
     T: Clone,
     T: Default,
 {
@@ -22,17 +25,13 @@ where
         Self { data: vec![] }
     }
 
-    fn op(&self, rhs: &Self, op: fn(T, T) -> T) -> Self {
-        if self.data.len() != rhs.data.len() {
-            panic!("Unequal length!")
-        }
-
+    fn op(&self, rhs: &Self, op_func: fn(T, T) -> T) -> Self {
         let mut result = Self {
             data: vec![T::default(); self.data.len()],
         };
 
         for idx in 0..result.data.len() {
-            result.data[idx] = op(self.data[idx].clone(), rhs.data[idx].clone());
+            result.data[idx] = op_func(self.data[idx].clone(), rhs.data[idx].clone());
         }
 
         result
@@ -41,18 +40,20 @@ where
 
 impl<T> From<Vec<T>> for Tensor1D<T>
 where
-    T: Add<T, Output = T>,
+    T: Add<Output = T>,
+    T: Sub<Output = T>,
     T: Clone,
     T: Default,
 {
-    fn from(d: Vec<T>) -> Self {
-        Self { data: d }
+    fn from(data: Vec<T>) -> Self {
+        Self { data }
     }
 }
 
 impl<T> Add for Tensor1D<T>
 where
-    T: Add<T, Output = T>,
+    T: Add<Output = T>,
+    T: Sub<Output = T>,
     T: Clone,
     T: Default,
 {
@@ -67,41 +68,34 @@ where
     }
 }
 
-impl<'a, T> Add<&'a Tensor1D<T>> for &'a Tensor1D<T>
+impl<T> Sub for Tensor1D<T>
 where
-    T: Add<T, Output = T>,
+    T: Add<Output = T>,
+    T: Sub<Output = T>,
     T: Clone,
     T: Default,
 {
     type Output = Tensor1D<T>;
 
-    fn add(self, rhs: Self) -> Self::Output {
+    fn sub(self, rhs: Self) -> Self::Output {
         if self.data.len() != rhs.data.len() {
             panic!("Unequal length!")
         }
 
-        self.op(&rhs, |v1, v2| v1 + v2)
+        self.op(&rhs, |v1, v2| v1 - v2)
     }
 }
 
 fn main() {
-    // let v1: Tensor1D<f32> = Tensor1D::new();
-    // println!("{:#?}", v1);
-    // let v2: Tensor1D<f32> = Tensor1D::new();
-    // println!("{:#?}", v2);
+    let _v: Tensor1D<f32> = Tensor1D::new();
 
-    // let v3 = v1 + v2;
-    // println!("{:#?}", v3);
+    let v1 = Tensor1D::from(vec![1.0, 2.0, 3.0]);
+    let v2 = Tensor1D::from(vec![1.0, 2.0, 3.0]);
 
-    let v1: Tensor1D<f32> = Tensor1D::from(vec![1.0, 2.0, 3.0]);
-    println!("{:#?}", v1);
-    let v2: Tensor1D<f32> = Tensor1D::from(vec![1.0, 2.0, 3.0]);
-    println!("{:#?}", v2);
+    let v3 = v1 + v2;
+    println!("v3 = {:#?}", v3);
 
-    let v3 = &v1 + &v2;
-    println!("{:#?}", v1);
-    println!("{:#?}", v2);
-    println!("{:#?}", v3);
-
-    println!("{:#?}", &v1 != &v2);
+    let v4 = Tensor1D::from(vec![1.0, 2.0, 3.0]);
+    let v5 = v3 - v4;
+    println!("v5 = {:#?}", v5);
 }
