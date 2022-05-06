@@ -2,3 +2,6 @@ target/
 debug/
 release/
 rls/
+
+TODO.txt
+*.exe
