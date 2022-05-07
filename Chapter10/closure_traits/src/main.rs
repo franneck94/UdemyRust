@@ -2,7 +2,7 @@
 /// - *FnMut* can change the environment because it mutably borrows values
 /// - *Fn* borrows values from the environment immutably
 
-fn takes_closure<F: Fn(&i32)>(d: &[i32], f: F) {
+fn takes_closure<F: FnMut(&i32)>(d: &[i32], f: F) {
     d.iter().for_each(f);
 }
 
@@ -12,4 +12,6 @@ fn main() {
     let f = |&v: &i32| println!("{}", v);
 
     takes_closure(&x, f);
+
+    println!("{:?}", x);
 }
