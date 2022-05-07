@@ -1,35 +1,31 @@
 use std::fmt;
 
-type Result<T> = std::result::Result<T, NumberParseError>;
-
 #[derive(Debug, Clone)]
 struct NumberParseError;
 
+type ParsingResult<T> = std::result::Result<T, NumberParseError>;
+
 impl fmt::Display for NumberParseError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "invalid value")
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "error")
     }
 }
 
-fn convert_first(vec: Vec<&str>) -> Result<f32> {
-    vec.first().ok_or(NumberParseError).and_then(|s| {
-        s.parse::<f32>()
-            .map_err(|_| NumberParseError)
-            .map(|i| 2.0 * i)
-    })
+fn convert_i32(input: &str) -> ParsingResult<i32> {
+    input.parse::<i32>().map_err(|_| NumberParseError)
 }
 
-fn print(result: Result<f32>) {
-    match result {
-        Ok(n) => println!("Ok: {}", n),
-        Err(e) => println!("Err: {}", e),
-    }
+fn convert_f32(input: &str) -> ParsingResult<f32> {
+    input.parse::<f32>().map_err(|_| NumberParseError)
 }
 
 fn main() {
-    let v1 = vec!["42"];
-    let v2 = vec![" 42"];
+    let v = " 2";
 
-    print(convert_first(v1));
-    print(convert_first(v2));
+    let result = convert_i32(v);
+
+    match result {
+        Ok(result) => println!("Result: {result}"),
+        Err(err) => println!("Err: {err}"),
+    }
 }
