@@ -6,7 +6,7 @@ fn is_prime(n: u64) -> bool {
         return false;
     }
 
-    if (n  == 2) || (n  == 3) || (n  == 5) || (n  == 7) || (n == 11) {
+    if (n == 2) || (n == 3) || (n == 5) || (n == 7) || (n == 11) {
         return true;
     }
 
@@ -20,7 +20,7 @@ fn is_prime(n: u64) -> bool {
 }
 
 fn worker(
-    transmitter: mpsc::Sender<(u64, u64)>,
+    transmitter: mpsc::Sender<(u64, u64, bool)>,
     id: u64,
     start: u64,
     end: u64,
@@ -29,28 +29,45 @@ fn worker(
         for n in start..end {
             let result = is_prime(n);
 
-            if result {
-                transmitter.send((id, n)).unwrap();
-            }
+            transmitter.send((id, n, result)).unwrap();
         }
     })
 }
 
-fn main() {
-    let (transmitter, recv) = mpsc::channel();
+fn number_split(id: u64) -> (u64, u64) {
+    let offset_start = if id > 1 {
+        1_000_000_000 + (id - 1) * 3
+    } else {
+        1_000_000_000
+    };
+    let offset_end = 1_000_000_000 + id * 3;
 
+    (offset_start, offset_end)
+}
+
+fn main() {
     let mut handles = vec![];
 
-    for id in 0..10 {
-        let transmitter = transmitter.clone();
+    let recv = {
+        let (transmitter, recv) = mpsc::channel();
 
-        let handle = worker(transmitter, id, 1_000_000_000, 1_000_001_000);
+        for id in 0..10 {
+            let transmitter = transmitter.clone();
 
-        handles.push(handle);
-    }
+            let (offset_start, offset_end) = number_split(id);
+            let handle = worker(transmitter, id, offset_start, offset_end);
 
-    for recieved_msg in recv {
-        println!("Thread: {}, {} is prime", recieved_msg.0, recieved_msg.1);
+            handles.push(handle);
+        }
+
+        recv
+    };
+
+    for (idx, recv_msg) in recv.iter().enumerate() {
+        println!(
+            "{} - Thread: {}, {} is prime {}",
+            idx, recv_msg.0, recv_msg.1, recv_msg.2
+        );
     }
 
     for handle in handles {
