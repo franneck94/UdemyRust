@@ -2,7 +2,7 @@ use std::sync::mpsc;
 use std::thread;
 
 fn main() {
-    let (transmitter, reciever) = mpsc::channel();
+    let (transmitter, recv) = mpsc::channel();
     let transmitter2 = transmitter.clone();
 
     thread::spawn(move || {
@@ -15,10 +15,10 @@ fn main() {
         transmitter2.send(msg).unwrap();
     });
 
-    let recieved_msg1 = reciever.recv().unwrap();
-    let recieved_msg2 = reciever.recv().unwrap();
+    let recieved_msg1 = recv.recv().unwrap();
+    let recieved_msg2 = recv.recv().unwrap();
 
-    // let recieved_msg3 = reciever.try_recv().unwrap();
+    // let recieved_msg3 = recv.try_recv().unwrap();
 
     println!("Recieved: {}{}", recieved_msg1, recieved_msg2);
 }

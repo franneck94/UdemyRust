@@ -6,8 +6,12 @@ fn is_prime(n: u64) -> bool {
         return false;
     }
 
-    if (n % 2 == 0) || (n % 3 == 0) || (n % 5 == 0) || (n % 7 == 0) || (n % 11 == 0) {
+    if (n  == 2) || (n  == 3) || (n  == 5) || (n  == 7) || (n == 11) {
         return true;
+    }
+
+    if (n % 2 == 0) || (n % 3 == 0) || (n % 5 == 0) || (n % 7 == 0) || (n % 11 == 0) {
+        return false;
     }
 
     let upper = (n as f64).sqrt() as u64;
@@ -33,7 +37,7 @@ fn worker(
 }
 
 fn main() {
-    let (transmitter, reciever) = mpsc::channel();
+    let (transmitter, recv) = mpsc::channel();
 
     let mut handles = vec![];
 
@@ -45,7 +49,7 @@ fn main() {
         handles.push(handle);
     }
 
-    for recieved_msg in reciever {
+    for recieved_msg in recv {
         println!("Thread: {}, {} is prime", recieved_msg.0, recieved_msg.1);
     }
 
