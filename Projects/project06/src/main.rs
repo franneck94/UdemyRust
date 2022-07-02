@@ -6,21 +6,38 @@ fn is_prime(n: u64) -> bool {
         return false;
     }
 
-    if (n == 2) || (n == 3) || (n == 5) || (n == 7) || (n == 11) {
+    if (n == 2) || (n == 3) || (n == 5) || (n == 7) || (n == 11) || (n == 13) {
         return true;
     }
 
-    if (n % 2 == 0) || (n % 3 == 0) || (n % 5 == 0) || (n % 7 == 0) || (n % 11 == 0) {
+    if (n % 2 == 0)
+        || (n % 3 == 0)
+        || (n % 5 == 0)
+        || (n % 7 == 0)
+        || (n % 11 == 0)
+        || (n % 13 == 0)
+    {
         return false;
     }
 
     let upper = (n as f64).sqrt() as u64;
 
-    (13..=upper).step_by(2).all(|i| n % i != 0)
+    (17..=upper).step_by(2).all(|i| n % i != 0)
+}
+
+fn number_split(id: u64) -> (u64, u64) {
+    let offset_start = if id > 1 {
+        500_000_000 + (id - 1) * 100
+    } else {
+        500_000_000
+    };
+    let offset_end = offset_start + 100;
+
+    (offset_start, offset_end)
 }
 
 fn worker(
-    transmitter: mpsc::Sender<(u64, u64, bool)>,
+    trans: mpsc::Sender<(u64, u64, bool)>,
     id: u64,
     start: u64,
     end: u64,
@@ -29,33 +46,21 @@ fn worker(
         for n in start..end {
             let result = is_prime(n);
 
-            transmitter.send((id, n, result)).unwrap();
+            trans.send((id, n, result)).unwrap()
         }
     })
-}
-
-fn number_split(id: u64) -> (u64, u64) {
-    let offset_start = if id > 1 {
-        1_000_000_000 + (id - 1) * 3
-    } else {
-        1_000_000_000
-    };
-    let offset_end = 1_000_000_000 + id * 3;
-
-    (offset_start, offset_end)
 }
 
 fn main() {
     let mut handles = vec![];
 
     let recv = {
-        let (transmitter, recv) = mpsc::channel();
+        let (trans, recv) = mpsc::channel();
 
         for id in 0..10 {
-            let transmitter = transmitter.clone();
-
             let (offset_start, offset_end) = number_split(id);
-            let handle = worker(transmitter, id, offset_start, offset_end);
+            let trans = trans.clone();
+            let handle = worker(trans, id, offset_start, offset_end);
 
             handles.push(handle);
         }
