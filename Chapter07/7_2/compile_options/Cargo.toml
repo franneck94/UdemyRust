@@ -1,0 +1,29 @@
+[package]
+name = "compile_options"
+version = "0.1.0"
+edition = "2021"
+
+# 0: no optimizations
+# 1: basic optimizations
+# 2: some optimizations
+# 3: all optimizations
+# "s": optimize for binary size
+# "z": optimize for binary size, but also turn off loop vectorization.
+
+# cargo build
+[profile.dev]
+opt-level = 1
+overflow-checks = false
+
+# cargo build --profile release
+[profile.release]
+opt-level = 3
+
+# cargo build --profile release-lto
+[profile.release-lto]
+inherits = "release"
+lto = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
