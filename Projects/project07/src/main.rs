@@ -26,12 +26,9 @@ fn is_prime(n: u64) -> bool {
 }
 
 fn number_split(id: u64) -> (u64, u64) {
-    let offset_start = if id > 1 {
-        500_000_000 + (id - 1) * 100
-    } else {
-        500_000_000
-    };
-    let offset_end = offset_start + 100;
+    let range_size = 10_000;
+    let offset_start = 500_000_000 + id * range_size;
+    let offset_end = offset_start + range_size;
 
     (offset_start, offset_end)
 }
@@ -69,10 +66,12 @@ fn main() {
     };
 
     for (idx, recv_msg) in recv.iter().enumerate() {
-        println!(
-            "{} - Thread: {}, {} is prime {}",
-            idx, recv_msg.0, recv_msg.1, recv_msg.2
-        );
+        if recv_msg.2 {
+            println!(
+                "{} - Thread: {}, {} is prime {}",
+                idx, recv_msg.0, recv_msg.1, recv_msg.2
+            );
+        }
     }
 
     for handle in handles {
