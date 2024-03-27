@@ -5,7 +5,7 @@ fn first_word(s: &String) -> &str {
         }
     }
 
-    &s[..]
+    &s
 }
 
 fn main() {
