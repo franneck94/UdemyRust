@@ -1,75 +1,66 @@
+mod lib;
+
 use std::sync::mpsc;
 use std::thread;
 
-fn is_prime(n: u64) -> bool {
-    if n == 0 || n == 1 {
-        return false;
-    }
-
-    if (n == 2) || (n == 3) || (n == 5) || (n == 7) || (n == 11) || (n == 13) {
-        return true;
-    }
-
-    if (n % 2 == 0)
-        || (n % 3 == 0)
-        || (n % 5 == 0)
-        || (n % 7 == 0)
-        || (n % 11 == 0)
-        || (n % 13 == 0)
-    {
-        return false;
-    }
-
-    let upper = (n as f64).sqrt() as u64;
-
-    (17..=upper).step_by(2).all(|i| n % i != 0)
+struct WorkerResult {
+    thread_id: u64,
+    number: u64,
+    is_prime: bool,
 }
 
-fn number_split(id: u64) -> (u64, u64) {
+fn worker(
+    transmitter: mpsc::Sender<WorkerResult>,
+    thread_id: u64,
+    start_offset: u64,
+    end_offset: u64,
+) -> thread::JoinHandle<()> {
+    thread::spawn(move || {
+        for n in start_offset..end_offset {
+            let result = lib::is_prime(n);
+
+            transmitter
+                .send(WorkerResult {
+                    thread_id,
+                    number: n,
+                    is_prime: result,
+                })
+                .unwrap();
+        }
+    })
+}
+
+fn number_split(thread_id: u64) -> (u64, u64) {
+    let start_value = 500_000_000;
     let range_size = 10_000;
-    let offset_start = 500_000_000 + id * range_size;
+    let offset_start = start_value + thread_id * range_size;
     let offset_end = offset_start + range_size;
 
     (offset_start, offset_end)
 }
 
-fn worker(
-    trans: mpsc::Sender<(u64, u64, bool)>,
-    id: u64,
-    start: u64,
-    end: u64,
-) -> thread::JoinHandle<()> {
-    thread::spawn(move || {
-        for n in start..end {
-            let result = is_prime(n);
-
-            trans.send((id, n, result)).unwrap()
-        }
-    })
-}
-
 fn main() {
     let mut handles = vec![];
 
-    let recv = {
-        let (trans, recv) = mpsc::channel();
+    let reciver = {
+        let (transmitter, reciver) = mpsc::channel();
 
-        for id in 0..10 {
-            let (offset_start, offset_end) = number_split(id);
-            let trans = trans.clone();
-            let handle = worker(trans, id, offset_start, offset_end);
+        for thread_id in 0..10 {
+            let (offset_start, offset_end) = number_split(thread_id);
+            let transmitter = transmitter.clone();
+            let handle = worker(transmitter, thread_id, offset_start, offset_end);
 
             handles.push(handle);
         }
 
-        recv
+        reciver
     };
 
-    for (idx, recv_msg) in recv.iter().enumerate() {
-        if recv_msg.2 {
+    for (message_idx, recieved_message) in reciver.iter().enumerate() {
+        if recieved_message.is_prime {
             println!(
-                "{} - Thread: {}, {} is prime {}",
-                idx, recv_msg.0, recv_msg.1, recv_msg.2
+                "{message_idx} - Thread: {}, {} is prime {}",
+                recieved_message.thread_id, recieved_message.number, recieved_message.is_prime
             );
         }
     }

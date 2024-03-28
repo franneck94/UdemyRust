@@ -1,18 +1,20 @@
 use std::sync::{Arc, Mutex};
 use std::thread;
 
+const NUM_THREADS: i32 = 10;
+
 fn main() {
     let counter = Arc::new(Mutex::new(0));
 
     let mut handles = vec![];
 
-    for _ in 0..10 {
-        let counter = Arc::clone(&counter);
+    for _ in 0..NUM_THREADS {
+        let cloned_counter = counter.clone();
 
         let handle = thread::spawn(move || {
-            let mut counter = counter.lock().unwrap();
+            let mut locked_counter = cloned_counter.lock().unwrap();
 
-            *counter += 1;
+            *locked_counter += 1;
         });
 
         handles.push(handle);
