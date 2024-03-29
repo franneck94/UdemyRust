@@ -9,7 +9,7 @@ pub struct Circle {
 
 impl Area for Circle {
     fn area(&self) -> f32 {
-        return self.radius * self.radius * 3.14159;
+        self.radius * self.radius * std::f32::consts::PI
     }
 }
 
@@ -20,7 +20,7 @@ pub struct Square {
 
 impl Area for Square {
     fn area(&self) -> f32 {
-        return self.length * self.length;
+        self.length * self.length
     }
 }
 
