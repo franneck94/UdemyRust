@@ -61,7 +61,7 @@ where
 
     fn add(self, rhs: Self) -> Self::Output {
         if self.data.len() != rhs.data.len() {
-            panic!("Unequal length!")
+            panic!("Cannot add both vectors. Unequal lengths!");
         }
 
         self.op(&rhs, |v1, v2| v1 + v2)
@@ -79,7 +79,7 @@ where
 
     fn sub(self, rhs: Self) -> Self::Output {
         if self.data.len() != rhs.data.len() {
-            panic!("Unequal length!")
+            panic!("Cannot add both vectors. Unequal lengths!");
         }
 
         self.op(&rhs, |v1, v2| v1 - v2)
@@ -90,8 +90,9 @@ fn main() {
     let _v: Tensor1D<f32> = Tensor1D::new();
 
     let v1 = Tensor1D::from(vec![1.0, 2.0, 3.0]);
+    println!("v1 = {:#?}", v1);
     let v2 = Tensor1D::from(vec![1.0, 2.0, 3.0]);
-
+    println!("v2 = {:#?}", v2);
     let v3 = v1 + v2;
     println!("v3 = {:#?}", v3);
 
