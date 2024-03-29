@@ -19,7 +19,7 @@ fn is_prime(n: u64) -> bool {
 
     let upper_value = (n as f64).sqrt() as u64;
 
-    (17..=upper_value).step_by(2).all(|i| n & i != 0)
+    (17..=upper_value).step_by(2).all(|i| n % i != 0)
 }
 
 fn main() {

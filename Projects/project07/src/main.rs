@@ -2,11 +2,11 @@ mod lib;
 
 use std::sync::mpsc;
 use std::thread;
+use std::time::Instant;
 
 struct WorkerResult {
     thread_id: u64,
-    number: u64,
-    is_prime: bool,
+    results: Vec<(u64, bool)>,
 }
 
 fn worker(
@@ -16,17 +16,17 @@ fn worker(
     end_offset: u64,
 ) -> thread::JoinHandle<()> {
     thread::spawn(move || {
+        let mut results: Vec<(u64, bool)> = vec![];
+
         for n in start_offset..end_offset {
             let result = lib::is_prime(n);
 
-            transmitter
-                .send(WorkerResult {
-                    thread_id,
-                    number: n,
-                    is_prime: result,
-                })
-                .unwrap();
+            results.push((n, result));
         }
+
+        transmitter
+            .send(WorkerResult { thread_id, results })
+            .unwrap();
     })
 }
 
@@ -42,30 +42,38 @@ fn number_split(thread_id: u64) -> (u64, u64) {
 fn main() {
     let mut handles = vec![];
 
-    let reciver = {
-        let (transmitter, reciver) = mpsc::channel();
+    let start_time = Instant::now();
 
-        for thread_id in 0..10 {
-            let (offset_start, offset_end) = number_split(thread_id);
+    let reciever = {
+        let (transmitter, reciever) = mpsc::channel();
+
+        for thrad_id in 0..10 {
+            let (offset_start, offset_end) = number_split(thrad_id);
             let transmitter = transmitter.clone();
-            let handle = worker(transmitter, thread_id, offset_start, offset_end);
+            let handle = worker(transmitter, thrad_id, offset_start, offset_end);
 
             handles.push(handle);
         }
 
-        reciver
+        reciever
     };
 
-    for (message_idx, recieved_message) in reciver.iter().enumerate() {
-        if recieved_message.is_prime {
-            println!(
-                "{message_idx} - Thread: {}, {} is prime {}",
-                recieved_message.thread_id, recieved_message.number, recieved_message.is_prime
-            );
+    for (message_idx, recieved_message) in reciever.iter().enumerate() {
+        for (number, is_prime) in recieved_message.results {
+            if is_prime {
+                println!(
+                    "{message_idx} - Thread: {}, {} is prime {}",
+                    recieved_message.thread_id, number, is_prime
+                );
+            }
         }
     }
 
     for handle in handles {
         handle.join().unwrap();
     }
+
+    let end_time = Instant::now();
+    let elapsed_time = end_time - start_time;
+    println!("Elapsed Time: {elapsed_time:?}");
 }

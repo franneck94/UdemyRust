@@ -4,7 +4,7 @@ use std::thread;
 const NUM_THREADS: i32 = 10;
 
 fn main() {
-    let counter = Arc::new(Mutex::new(0));
+    let mut counter = Arc::new(Mutex::new(0));
 
     let mut handles = vec![];
 
