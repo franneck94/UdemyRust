@@ -136,7 +136,7 @@
     "workbench.editor.empty.hint": "hidden",
     "diffEditor.ignoreTrimWhitespace": false,
     "rust-analyzer.linkedProjects": [
-        "${workspaceFolder}/Projects/project08/Cargo.toml"
+        "${workspaceFolder}/Chapter09/oop/Cargo.toml"
     ],
     "rust-analyzer.check.command": "clippy",
     "debug.allowBreakpointsEverywhere": true

@@ -17,9 +17,7 @@ impl StatisticData {
     }
 
     pub fn remove(&mut self) -> Option<f32> {
-        let popped_val = self.data.pop();
-
-        popped_val
+        self.data.pop()
     }
 
     pub fn compute_mean(&mut self) {
@@ -28,7 +26,7 @@ impl StatisticData {
 }
 
 fn main() {
-    let mut data1 = StatisticData {
+    let mut _data1 = StatisticData {
         data: vec![],
         mean: 0.0,
     };
