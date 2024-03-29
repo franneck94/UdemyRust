@@ -24,12 +24,10 @@ impl Area for Square {
     }
 }
 
-// static dispatch
-// create function copy at comple time, faster in runtime, larger exe size
-fn example_to_call_area<T>(obj: &T) -> f32
-where
-    T: Area,
-{
+// dynamic dispath
+// fat pointer: points to data and virtual function table
+// slower at runtime, smaller exe
+fn example_to_call_area(obj: &dyn Area) -> f32 {
     obj.area()
 }
 
