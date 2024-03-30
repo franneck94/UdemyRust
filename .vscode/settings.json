@@ -136,7 +136,7 @@
     "workbench.editor.empty.hint": "hidden",
     "diffEditor.ignoreTrimWhitespace": false,
     "rust-analyzer.linkedProjects": [
-        "${workspaceFolder}/Projects/project09/Cargo.toml"
+        "${workspaceFolder}/Chapter09/polymorphism3/Cargo.toml"
     ],
     "rust-analyzer.check.command": "clippy",
     "debug.allowBreakpointsEverywhere": true
