@@ -1,10 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
 use eframe::egui;
-use egui::{
-    plot::{Line, Plot, Points, Value, Values},
-    Color32,
-};
+use egui::Color32;
+use egui_plot::MarkerShape;
+use egui_plot::{Line, Plot, PlotPoints, Points};
 use rand::distributions::{Distribution, Uniform};
 use rand::prelude::*;
 
@@ -13,8 +12,9 @@ fn main() {
     eframe::run_native(
         "My egui App",
         options,
-        Box::new(|_cc| Box::new(MyApp::default())),
-    );
+        Box::new(|_cc| Box::<MyApp>::default()),
+    )
+    .unwrap();
 }
 
 struct Data {
@@ -24,16 +24,16 @@ struct Data {
     scatter2: Points, // sin scatter points
 }
 
+#[derive(Default)]
 struct MyApp {
     plot_dataset: bool,
 }
 
-impl Default for MyApp {
-    fn default() -> Self {
-        Self {
-            plot_dataset: false,
-        }
-    }
+fn get_scatter_points(data: PlotPoints, color: Color32) -> Points {
+    Points::new(data)
+        .radius(3.0)
+        .shape(MarkerShape::Circle)
+        .color(color)
 }
 
 fn get_data() -> Data {
@@ -47,38 +47,44 @@ fn get_data() -> Data {
     let mut rng1 = StdRng::from_rng(seeded_rng1).unwrap();
     let mut rng2 = StdRng::from_rng(seeded_rng2).unwrap();
 
-    let sin = (0..100).map(|i| {
-        let x = (i as f64) * 0.01 * std::f64::consts::PI * 2.0;
-        Value::new(x, x.sin())
-    });
-    let cos = (0..100).map(|i| {
-        let x = (i as f64) * 0.01 * std::f64::consts::PI * 2.0;
-        Value::new(x, x.cos())
-    });
+    let sin = PlotPoints::new(
+        (0..100)
+            .map(|i| {
+                let x = (i as f64) * 0.01 * std::f64::consts::PI * 2.0;
+                [x, x.sin()]
+            })
+            .collect(),
+    );
+    let cos = PlotPoints::new(
+        (0..100)
+            .map(|i| {
+                let x = (i as f64) * 0.01 * std::f64::consts::PI * 2.0;
+                [x, x.cos()]
+            })
+            .collect(),
+    );
 
-    let sin_data = (0..50).map(|_| {
-        let x: f64 = sample.sample(&mut rng1) * std::f64::consts::PI * 2.0;
-        Value::new(x, x.sin() + epsilon.sample(&mut rng1))
-    });
-    let cos_data = (0..50).map(|_| {
-        let x: f64 = sample.sample(&mut rng2) * std::f64::consts::PI * 2.0;
-        Value::new(x, x.cos() + epsilon.sample(&mut rng2))
-    });
+    let sin_data = PlotPoints::new(
+        (0..50)
+            .map(|_| {
+                let x: f64 = sample.sample(&mut rng1) * std::f64::consts::PI * 2.0;
+                [x, x.sin() + epsilon.sample(&mut rng1)]
+            })
+            .collect(),
+    );
+    let cos_data = PlotPoints::new(
+        (0..50)
+            .map(|_| {
+                let x: f64 = sample.sample(&mut rng2) * std::f64::consts::PI * 2.0;
+                [x, x.cos() + epsilon.sample(&mut rng2)]
+            })
+            .collect(),
+    );
 
-    let line1 = Line::new(Values::from_values_iter(sin))
-        .width(3.0)
-        .color(Color32::RED);
-    let line2 = Line::new(Values::from_values_iter(cos))
-        .width(3.0)
-        .color(Color32::BLUE);
-    let scatter1 = Points::new(Values::from_values_iter(sin_data))
-        .radius(3.0)
-        .shape(egui::plot::MarkerShape::Circle)
-        .color(Color32::LIGHT_RED);
-    let scatter2 = Points::new(Values::from_values_iter(cos_data))
-        .radius(3.0)
-        .shape(egui::plot::MarkerShape::Circle)
-        .color(Color32::LIGHT_BLUE);
+    let line1 = Line::new(sin).width(3.0).color(Color32::RED);
+    let line2 = Line::new(cos).width(3.0).color(Color32::BLUE);
+    let scatter1 = get_scatter_points(sin_data, Color32::LIGHT_RED);
+    let scatter2 = get_scatter_points(cos_data, Color32::LIGHT_BLUE);
 
     Data {
         line1,
