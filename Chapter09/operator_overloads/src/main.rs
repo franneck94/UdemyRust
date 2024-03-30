@@ -9,7 +9,7 @@ pub struct Point2D {
 impl Add for Point2D {
     type Output = Point2D;
 
-    fn add(self, other: Point2D) -> Point2D {
+    fn add(self, other: Point2D) -> Self::Output {
         Point2D {
             x: self.x + other.x,
             y: self.y + other.y,
@@ -20,7 +20,7 @@ impl Add for Point2D {
 impl Add<&Point2D> for &Point2D {
     type Output = Point2D;
 
-    fn add(self, other: &Point2D) -> Point2D {
+    fn add(self, other: &Point2D) -> Self::Output {
         Point2D {
             x: self.x + other.x,
             y: self.y + other.y,

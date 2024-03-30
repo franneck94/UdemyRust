@@ -25,14 +25,14 @@ impl Area for Square {
 }
 
 fn main() {
-    let circle = Circle { radius: 1.0 };
-    let square = Square { length: 2.0 };
+    let circle = Box::new(Circle { radius: 1.0 });
+    let square = Box::new(Square { length: 2.0 });
 
     // trait Objects via dnymaic dispatch
     // trait object fat pointer holds:
     // - data pointer
     // - vtable pointer
-    let area_items: Vec<&dyn Area> = vec![&circle, &square];
+    let area_items: Vec<Box<dyn Area>> = vec![circle, square];
     for area_item in area_items {
         area_item.area();
     }
