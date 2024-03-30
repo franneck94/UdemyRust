@@ -39,13 +39,10 @@ fn get_scatter_points(data: PlotPoints, color: Color32) -> Points {
 fn get_data() -> Data {
     let public_bytes: Vec<u8> = Vec::from_iter(0..32);
     let public_bytes: [u8; 32] = public_bytes.try_into().unwrap();
-    let seeded_rng1 = StdRng::from_seed(public_bytes);
-    let seeded_rng2 = StdRng::from_seed(public_bytes);
-
+    let seed = StdRng::from_seed(public_bytes);
     let sample = Uniform::from(0.0..1.0);
     let epsilon = Uniform::from(-0.1..0.1);
-    let mut rng1 = StdRng::from_rng(seeded_rng1).unwrap();
-    let mut rng2 = StdRng::from_rng(seeded_rng2).unwrap();
+    let mut rng = StdRng::from_rng(seed).unwrap();
 
     let sin = PlotPoints::new(
         (0..100)
@@ -67,16 +64,16 @@ fn get_data() -> Data {
     let sin_data = PlotPoints::new(
         (0..50)
             .map(|_| {
-                let x: f64 = sample.sample(&mut rng1) * std::f64::consts::PI * 2.0;
-                [x, x.sin() + epsilon.sample(&mut rng1)]
+                let x: f64 = sample.sample(&mut rng) * std::f64::consts::PI * 2.0;
+                [x, x.sin() + epsilon.sample(&mut rng)]
             })
             .collect(),
     );
     let cos_data = PlotPoints::new(
         (0..50)
             .map(|_| {
-                let x: f64 = sample.sample(&mut rng2) * std::f64::consts::PI * 2.0;
-                [x, x.cos() + epsilon.sample(&mut rng2)]
+                let x: f64 = sample.sample(&mut rng) * std::f64::consts::PI * 2.0;
+                [x, x.cos() + epsilon.sample(&mut rng)]
             })
             .collect(),
     );
