@@ -11,6 +11,12 @@ impl<T> MyBox<T> {
     }
 }
 
+impl<T> Drop for MyBox<T> {
+    fn drop(&mut self) {
+        println!("Dropping MyBox");
+    }
+}
+
 impl<T> Deref for MyBox<T> {
     type Target = T;
 
@@ -22,12 +28,6 @@ impl<T> Deref for MyBox<T> {
 impl<T> DerefMut for MyBox<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.value
-    }
-}
-
-impl<T> Drop for MyBox<T> {
-    fn drop(&mut self) {
-        println!("Dropping MyBox");
     }
 }
 
@@ -44,9 +44,9 @@ fn main() {
 
     let mut d = MyBox::new(a);
 
-    assert_eq!(*d, 1);
+    assert_eq!(*d, 1); // READING: Deref
 
-    *d = 2;
+    *d = 2; // WRITING: DerefMut
 
-    assert_eq!(*d, 2);
+    assert_eq!(*d, 2); // READING: Deref
 }

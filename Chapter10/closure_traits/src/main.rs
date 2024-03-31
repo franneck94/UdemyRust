@@ -1,23 +1,28 @@
-/// FnOnce: Moves, takes ownership
-/// FnMut: Can change variables, mutably borrowing
-/// Fn: Borrows values immutably
-
-fn take_closure<F: Fn(i32)>(d: Vec<i32>, f: F) {
-    for val in d {
-        f(val)
-    }
-}
-
-fn take_closure2<F: FnMut(&i32)>(d: Vec<i32>, f: F) {
-    d.iter().for_each(f)
-}
+/// Fn: Closures that can only borrow the
+/// captured variables immutably. It means that the closure can't
+/// modify the captured variables.
+///
+/// FnMut: Closures that can mutate the captured
+/// variables. These closures have the ability to change the state of
+/// variables they've captured.
+///
+/// FnOnce: Closure that consume the variables, they move the captured variable.
+///
+/// Function pointers implement all three of the closure
+/// traits (Fn, FnMut, and FnOnce), meaning you can always
+/// pass a function pointer as an argument for a function
+/// that expects a closure.
 
 fn main() {
-    let x = vec![1, 2, 3];
-    let f = |v: i32| println!("{}", v);
-    take_closure(x, f);
+    let mut count = 0;
 
-    let x2 = vec![1, 2, 3];
-    let f2 = |v: &i32| println!("{}", v);
-    take_closure2(x2, f2);
+    let print = || println!("{count} This is a Fn.");
+    print();
+
+    let mut increment = || {
+        count += 1;
+        println!("count: {}", count);
+        println!("This is a FnMut.")
+    };
+    increment();
 }

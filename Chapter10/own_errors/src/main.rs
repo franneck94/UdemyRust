@@ -28,4 +28,11 @@ fn main() {
         Ok(result) => println!("Result: {result}"),
         Err(err) => println!("Err: {err}"),
     }
+
+    let result = convert_f32(v);
+
+    match result {
+        Ok(result) => println!("Result: {result}"),
+        Err(err) => println!("Err: {err}"),
+    }
 }
