@@ -14,7 +14,6 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.suggest.preview": true,
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
-    "terminal.integrated.enableMultiLinePasteWarning": false,
     // Debug
     "debug.onTaskErrors": "debugAnyway",
     // Explorer
@@ -136,7 +135,7 @@
     "workbench.editor.empty.hint": "hidden",
     "diffEditor.ignoreTrimWhitespace": false,
     "rust-analyzer.linkedProjects": [
-        "${workspaceFolder}/Chapter09/polymorphism3/Cargo.toml"
+        "${workspaceFolder}/Chapter05/5_2/derived/Cargo.toml"
     ],
     "rust-analyzer.check.command": "clippy",
     "debug.allowBreakpointsEverywhere": true
