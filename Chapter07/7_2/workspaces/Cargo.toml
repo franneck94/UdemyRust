@@ -1,0 +1,4 @@
+# cargo new lib1 --lib
+# cargo new lib2 --lib
+# cargo new app --bin
+workspace = { members = ["app", "lib1", "lib2"] }
