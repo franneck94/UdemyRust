@@ -14,7 +14,7 @@ Implement the Debug, Eq, and PartialEq traits for the struct.
 ### Implement Constructor and Operation Methods
 
 Implement a new constructor method for creating an empty tensor. Implement an op method to perform element-wise operations (addition or subtraction) between two tensors of the same length.  
-Use a closure as a parameter to specify the operation function (op_func).   
+Use a closure as a parameter to specify the operation function (op_func).  
 Ensure that the tensor data is cloned before performing the operation.
 
 ### Implement From Trait for Vec
