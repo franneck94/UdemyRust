@@ -39,4 +39,4 @@ test teststest_non_empty_remainder_non_empty_delimiter ... ok
 test result ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-Happy coding and testing!
+Happy coding!

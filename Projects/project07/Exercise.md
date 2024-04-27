@@ -56,4 +56,4 @@ Print out the elapsed time at the end of the program.
 Elapsed Time 0.504s
 ```
 
-Happy coding and multithreading!
+Happy coding!
