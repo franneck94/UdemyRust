@@ -22,17 +22,20 @@ fn convert_f32(input: &str) -> ParsingResult<f32> {
 fn main() {
     let v = " 2";
 
-    let result = convert_i32(v);
+    {
+        let result = convert_i32(v);
 
-    match result {
-        Ok(result) => println!("Result: {result}"),
-        Err(err) => println!("Err: {err}"),
+        match result {
+            Ok(result) => println!("Result: {result}"),
+            Err(err) => println!("Err: {err}"),
+        }
     }
+    {
+        let result = convert_f32(v);
 
-    let result = convert_f32(v);
-
-    match result {
-        Ok(result) => println!("Result: {result}"),
-        Err(err) => println!("Err: {err}"),
+        match result {
+            Ok(result) => println!("Result: {result}"),
+            Err(err) => println!("Err: {err}"),
+        }
     }
 }

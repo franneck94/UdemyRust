@@ -24,5 +24,6 @@ fn main() {
         println!("count: {}", count);
         println!("This is a FnMut.")
     };
+
     increment();
 }

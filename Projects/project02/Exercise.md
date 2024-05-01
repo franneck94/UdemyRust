@@ -2,7 +2,12 @@
 
 ## Objective
 
-Implement a command-line tool that reads a file, performs a search-and-replace operation based on a regular expression pattern, and writes the modified content to another file.  
+Implement a command-line tool that:
+
+- reads a file's content
+- performs a search-and-replace operation
+- writes the modified content to an output file
+
 This exercise aims to familiarize students with command-line argument parsing, file I/O operations, regular expressions, and error handling in Rust.
 
 ## Instructions
@@ -19,22 +24,22 @@ struct Arguments<'a> {
 }
 ```
 
-The Arguments struct includes fields for the regular expression pattern, replacement string, input file path, and output file path.
+The *Arguments* struct includes fields for the regular expression pattern, replacement string, input file path, and output file path.
 
 ### Argument Parsing
 
-Implement the parse_args function to parse command-line arguments and populate the Arguments struct.  
+Implement the *parse_args* function to parse the user's command-line arguments and into an instance of the Arguments struct.  
 Ensure that the correct number of arguments is provided, and display an error message if the number of arguments is incorrect.
 
 ### File Reading
 
 Implement the read function to read the content of the input file specified by the user.  
-Handle errors gracefully by displaying an error message if reading fails.
+Add error handling by displaying an error message if the reading fails.
 
 ### File Writing
 
 Implement the write function to write the modified content to the output file specified by the user.  
-Handle errors gracefully by displaying an error message if writing fails.
+Add error handling by displaying an error message if the writing fails.
 
 ### Search and Replace
 
@@ -50,12 +55,19 @@ Ok(regex.replace_all(data, replacement).to_string())
 
 ### Main Function
 
-Modify the main function to collect command-line arguments and pass them to the run function for processing: argument parsing, file reading, search-and-replace operation, and file writing.
+```rust
+fn main() {
+    let argv: Vec<String> = env::args().collect();
+    let argc = argv.len();
+
+    run(argc, argv) // Will call: parse_args, read_file, replace, write_file
+}
+```
 
 Example Usage
 
 ```shell
-cargo run "" "" input.txt output.txt
+cargo run "AA" "aa" input.txt output.txt
 ```
 
 Happy coding!
